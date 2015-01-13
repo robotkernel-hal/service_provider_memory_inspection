@@ -1,0 +1,7 @@
+service
+request
+uint64_t data_adr
+uint32_t data_len
+uint8_t* data
+response
+char* error_message
