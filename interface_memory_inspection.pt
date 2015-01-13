@@ -1,6 +1,6 @@
 PTVERSION           = 2
 NAME                = interface_memory_inspection
-VERSION             = 3.0.3
+VERSION             = 3.0.0
 DESCRIPTION         = robotkernel memory inspection interface
 MAINTAINER          = Robert Burger <robert.burger@dlr.de>
 DOCUMENTATION       = https://rmintra01.robotic.dlr.de/wiki/robotkernel/interface_memory_inspection
