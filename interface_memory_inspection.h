@@ -28,6 +28,7 @@
 #include "robotkernel/kernel.h"
 #include "robotkernel/module.h"
 #include "robotkernel/interface_intf.h"
+#include "module_intf.h"
 
 #define LN_UNREGISTER_SERVICE_IN_BASE_DETOR  
 #include "ln_messages.h"
@@ -37,21 +38,6 @@
 
 #define INTFNAME "[interface_memory_inspection] "
 
-// -----------------------------------------------------------------------------
-// get process data pointers
-//
-typedef struct memory {
-    uint32_t slave_id; //! [in]     device slave_id
-    uint64_t address;
-    uint32_t length;
-    uint8_t *data;
-} memory_t;
-
-#undef MOD_REQUEST_MAGIC
-#define MOD_REQUEST_MAGIC                  0x20
-#define MOD_REQUEST_MEMORY_READ            MOD_REQUEST(0x0001, memory_t)
-#define MOD_REQUEST_MEMORY_WRITE           MOD_REQUEST(0x0002, memory_t)
-#define MOD_REQUEST_MEMORY_GET_INFO        MOD_REQUEST(0x0003, memory_t)
 
 namespace interface {
     
