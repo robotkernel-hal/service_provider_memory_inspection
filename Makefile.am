@@ -10,7 +10,7 @@ libinterface_memory_inspection_la_CXXFLAGS = -fno-strict-aliasing -Wall -I$(top_
 										   -I$(top_builddir) @ROBOTKERNEL_CFLAGS@ 
 libinterface_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VERSION)
 
-VPATH = $(srcdir):$(srcdir)/share/message_definitions
+VPATH = $(srcdir):$(srcdir)/share/ln/message_definitions
 
 LN_MESSAGES = \
 			  robotkernel/memory_inspection/read \
