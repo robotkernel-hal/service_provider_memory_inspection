@@ -13,7 +13,7 @@ defines
 interface_memory_inspection_base: %(dirname %(dirname %(CURDIR)))
 interface_memory_inspection_base_type: %(ifexists "%(interface_memory_inspection_base)/lib/libinterface_memory_inspection.so", "local_install", "rmpm_release")
 interface_memory_inspection_libdir: %(ifeq "%(interface_memory_inspection_base_type)", "local_install", "%(interface_memory_inspection_base)/lib", "%(interface_memory_inspection_base)/lib/$(ARCH)")
-add_message_definition_dir: %(interface_memory_inspection_base)/share/message_definitions 
+add_message_definition_dir: %(interface_memory_inspection_base)/share/ln/message_definitions 
 
 ifndef rk_interfaces: rk_interfaces: ""
 rk_interfaces: %(rk_interfaces):%(interface_memory_inspection_libdir)
