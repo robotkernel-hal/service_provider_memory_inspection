@@ -30,8 +30,12 @@
 #include "robotkernel/interface_intf.h"
 #include "module_intf.h"
 
-#define LN_UNREGISTER_SERVICE_IN_BASE_DETOR  
-#include "ln_messages.h"
+#define LN_UNREGISTER_SERVICE_IN_BASE_DETOR
+#ifdef BUILD_INTERFACE_MEMORY_INSPECTION
+#include "interface_memory_inspection_ln_messages.h"
+#else
+#include <interface_memory_inspection/interface_memory_inspection_ln_messages.h>
+#endif
 #undef LN_UNREGISTER_SERVICE_IN_BASE_DETOR
 
 #include <list>

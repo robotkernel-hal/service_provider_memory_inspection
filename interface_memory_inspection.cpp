@@ -24,7 +24,9 @@
 
 #include "interface_memory_inspection.h"
 #include "robotkernel/exceptions.h"
+#undef BUILD_HOST
 #undef BUILD_DATE
+#undef BUILD_USER
 #undef PACKAGE
 #undef PACKAGE_NAME
 #undef PACKAGE_STRING
@@ -63,16 +65,24 @@ int memory_inspection::on_read(ln::service_request& req, ln_service_robotkernel_
     memory_req.address  = svc.req.data_adr;
     memory_req.length   = svc.req.data_len;
     memory_req.data     = new uint8_t[svc.req.data_len];
-    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_READ, (void *)&memory_req);
+    
+    svc.resp.data = NULL;
+    svc.resp.data_len = 0;
+    try {
+	    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_READ, (void *)&memory_req);
+	    if(ret == -1)
+		    throw str_exception("MOD_REQUEST_MEMORY_READ failed!");
 
-    if(ret == -1) {
-	    svc.resp.data = NULL;
-	    svc.resp.data_len = 0;
-    } else {
 	    svc.resp.data = memory_req.data;
 	    svc.resp.data_len = memory_req.length;
+	    
+	    svc.resp.error_message_len = 0;
+	    req.respond();
     }
-    req.respond();
+    catch(const exception& e) {
+	    ln::string_buffer err(&svc.resp.error_message, e.what());
+	    req.respond();
+    }
 
     delete[] memory_req.data;
 
@@ -85,10 +95,19 @@ int memory_inspection::on_write(ln::service_request& req, ln_service_robotkernel
     memory_req.address  = svc.req.data_adr;
     memory_req.length   = svc.req.data_len;
     memory_req.data     = svc.req.data;
-    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_WRITE, (void *)&memory_req);
+    try {
+	    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_WRITE, (void *)&memory_req);
+	    if(ret == -1)
+		    throw str_exception("MOD_REQUEST_MEMORY_WRITE failed!");
 
-    req.respond();
-
+	    svc.resp.error_message_len = 0;
+	    req.respond();
+    }
+    catch(const exception& e) {
+	    ln::string_buffer err(&svc.resp.error_message, e.what());
+	    req.respond();
+    }
+    
     return 0;
 }
 	    
@@ -98,17 +117,27 @@ int memory_inspection::on_get_info(ln::service_request& req, ln_service_robotker
     memory_req.address  = 0;
     memory_req.length   = 0;
     memory_req.data     = NULL;
-    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_GET_INFO, (void *)&memory_req);
+    
+    svc.resp.base_adr = 0;
+    svc.resp.len = 0;
+    try {
+	    int ret = kernel::request_cb(_mod_name.c_str(), MOD_REQUEST_MEMORY_GET_INFO, (void *)&memory_req);
+	    
+	    if (ret == -1) 
+		    throw str_exception("MOD_REQUEST_GET_INFO failed!");
 
-    if (ret == -1) {
-        svc.resp.base_adr = 0;
-        svc.resp.len = 0;
-    } else {
-        svc.resp.base_adr = memory_req.address;
-        svc.resp.len = memory_req.length;
+	    svc.resp.base_adr = memory_req.address;
+	    svc.resp.len = memory_req.length;
+	    
+	    svc.resp.error_message_len = 0;
+	    
+	    req.respond();
+    }
+    catch(const exception& e) {
+	    ln::string_buffer err(&svc.resp.error_message, e.what());
+	    req.respond();
     }
 
-    req.respond();
 
     return 0;
 }
