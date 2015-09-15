@@ -28,6 +28,7 @@
 #include "robotkernel/kernel.h"
 #include "robotkernel/module.h"
 #include "robotkernel/interface_intf.h"
+#include "robotkernel/interface_base.h"
 #include "module_intf.h"
 
 #define LN_UNREGISTER_SERVICE_IN_BASE_DETOR
@@ -40,26 +41,20 @@
 
 #include <list>
 
-#define INTFNAME "[interface_memory_inspection] "
-
-
-namespace interface {
+namespace interface_memory_inspection {
     
 class memory_inspection : 
+    public robotkernel::interface_base, 
     public ln_service_read_base,
     public ln_service_write_base,
     public ln_service_get_info_base
 {
-    std::string _mod_name;
-    std::string _dev_name;
-    int _slave_id;
-
     public:
         //! default construction
         /*!
-         * \param mod_name module name to register for
+         * \param node configuration node
          */
-        memory_inspection(const std::string& mod_name, const std::string& dev_name, const int& slave_id);
+        memory_inspection(const YAML::Node& node);
 
         int on_read(ln::service_request& req, ln_service_robotkernel_memory_inspection_read& svc);
         int on_write(ln::service_request& req, ln_service_robotkernel_memory_inspection_write& svc);
