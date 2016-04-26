@@ -31,6 +31,13 @@
 #include "robotkernel/interface_base.h"
 #include "module_intf.h"
 
+#include <list>
+
+#include <stdint.h>
+#include <ln_cppwrapper.h>
+
+namespace interface_memory_inspection {
+
 #define LN_UNREGISTER_SERVICE_IN_BASE_DETOR
 #ifdef BUILD_INTERFACE_MEMORY_INSPECTION
 #include "interface_memory_inspection_ln_messages.h"
@@ -39,10 +46,6 @@
 #endif
 #undef LN_UNREGISTER_SERVICE_IN_BASE_DETOR
 
-#include <list>
-
-namespace interface_memory_inspection {
-    
 class memory_inspection : 
     public robotkernel::interface_base, 
     public ln_service_read_base,
