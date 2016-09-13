@@ -9,10 +9,10 @@ include_headers_HEADERS = interface_memory_inspection_ln_messages.h
 
 libinterface_memory_inspection_la_SOURCES  = interface_memory_inspection.cpp
 libinterface_memory_inspection_la_CXXFLAGS = -fno-strict-aliasing -Wall -I$(top_srcdir)/src -DBUILD_INTERFACE_MEMORY_INSPECTION \
-										   -I$(top_builddir) @ROBOTKERNEL_CFLAGS@ 
+										   -I$(top_builddir) @ROBOTKERNEL_CFLAGS@ @YAML_CPP_CFLAGS@
 libinterface_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VERSION)
 
-VPATH = $(srcdir):$(srcdir)/share/ln/message_definitions
+VPATH = $(srcdir):$(top_srcdir)/share/ln/message_definitions
 
 LN_MESSAGES = \
 			  robotkernel/memory_inspection/read \
@@ -25,4 +25,4 @@ interface_memory_inspection_ln_messages.h: Makefile $(LN_MESSAGES)
 	touch $@
 
 install-exec-hook:
-	cp -r $(srcdir)/share $(prefix)
+	cp -r $(top_srcdir)/share $(prefix)
