@@ -8,16 +8,16 @@ include_headersdir = $(includedir)/interface_memory_inspection
 include_headers_HEADERS = interface_memory_inspection_ln_messages.h
 
 libinterface_memory_inspection_la_SOURCES  = interface_memory_inspection.cpp
-libinterface_memory_inspection_la_CXXFLAGS = -fno-strict-aliasing -Wall -I$(top_srcdir)/src -DBUILD_INTERFACE_MEMORY_INSPECTION \
-										   -I$(top_builddir) @ROBOTKERNEL_CFLAGS@ @YAML_CPP_CFLAGS@
+libinterface_memory_inspection_la_CXXFLAGS = -fno-strict-aliasing -Wall -I$(srcdir) -I$(builddir) \
+                                             -DBUILD_INTERFACE_MEMORY_INSPECTION \
+                                             @ROBOTKERNEL_CFLAGS@ @LIBSTRING_UTIL_CFLAGS@ @YAML_CPP_CFLAGS@
 libinterface_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VERSION)
 
 VPATH = $(srcdir):$(top_srcdir)/share/ln/message_definitions
 
-LN_MESSAGES = \
-			  robotkernel/memory_inspection/read \
-			  robotkernel/memory_inspection/write \
-			  robotkernel/memory_inspection/get_info
+LN_MESSAGES = robotkernel/memory_inspection/read \
+              robotkernel/memory_inspection/write \
+              robotkernel/memory_inspection/get_info
 
 interface_memory_inspection_ln_messages.h: Makefile $(LN_MESSAGES)
 	@echo creating $@
