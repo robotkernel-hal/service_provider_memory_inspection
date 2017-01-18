@@ -26,32 +26,11 @@
 #define __INTERFACE_MEMORY_INSPECTION_H__
 
 #include "robotkernel/kernel.h"
-#include "robotkernel/module.h"
-#include "robotkernel/interface_intf.h"
 #include "robotkernel/interface_base.h"
-#include "module_intf.h"
-
-#include <list>
-
-#include <stdint.h>
-#include <ln_cppwrapper.h>
 
 namespace interface_memory_inspection {
 
-#define LN_UNREGISTER_SERVICE_IN_BASE_DETOR
-#ifdef BUILD_INTERFACE_MEMORY_INSPECTION
-#include "interface_memory_inspection_ln_messages.h"
-#else
-#include <interface_memory_inspection/interface_memory_inspection_ln_messages.h>
-#endif
-#undef LN_UNREGISTER_SERVICE_IN_BASE_DETOR
-
-class memory_inspection : 
-    public robotkernel::interface_base, 
-    public ln_service_read_base,
-    public ln_service_write_base,
-    public ln_service_get_info_base
-{
+class memory_inspection : public robotkernel::interface_base {
     public:
         //! default construction
         /*!
@@ -59,9 +38,29 @@ class memory_inspection :
          */
         memory_inspection(const YAML::Node& node);
 
-        int on_read(ln::service_request& req, ln_service_robotkernel_memory_inspection_read& svc);
-        int on_write(ln::service_request& req, ln_service_robotkernel_memory_inspection_write& svc);
-	    int on_get_info(ln::service_request& req, ln_service_robotkernel_memory_inspection_get_info& svc);
+        //! service callback read memory
+        /*!
+         * \param message service message
+         * \return success
+         */
+        int service_read(YAML::Node& message);
+        static const std::string service_definition_read;
+        
+        //! service callback write memory
+        /*!
+         * \param message service message
+         * \return success
+         */
+        int service_write(YAML::Node& message);
+        static const std::string service_definition_write;
+        
+        //! service callback get_info memory
+        /*!
+         * \param message service message
+         * \return success
+         */
+        int service_get_info(YAML::Node& message);
+        static const std::string service_definition_get_info;
 };
 
 } // namespace interface
