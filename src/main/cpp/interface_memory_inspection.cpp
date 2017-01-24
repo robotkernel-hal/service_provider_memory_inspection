@@ -41,7 +41,7 @@ memory_inspection::memory_inspection(const YAML::Node& node)
     kernel& k = *kernel::get_instance();
     
     stringstream base;
-    base << mod_name << "." << dev_name << "." << ".memory_inspection.";
+    base << mod_name << "." << dev_name << ".memory_inspection.";
     
     k.add_service(mod_name, base.str() + "read", service_definition_read,
             boost::bind(&memory_inspection::service_read, this, _1));
