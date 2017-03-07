@@ -26,154 +26,150 @@
 #include "robotkernel/exceptions.h"
 #include "module_intf.h"
 
-INTERFACE_DEF(memory_inspection, interface_memory_inspection::memory_inspection)
+SERVICE_PROVIDER_DEF(memory_inspection, interface_memory_inspection::memory_inspection);
 
 using namespace std;
+using namespace std::placeholders;
 using namespace robotkernel;
 using namespace interface_memory_inspection;
-        
-//! default construction
-/*!
- * \param node configuration node
- */
-memory_inspection::memory_inspection(const YAML::Node& node)
-    : interface_base("memory_inspection", node) {
-    kernel& k = *kernel::get_instance();
-    
-    stringstream base;
-    base << mod_name << "." << dev_name << ".memory_inspection.";
-    
-    k.add_service(mod_name, base.str() + "read", service_definition_read,
-            boost::bind(&memory_inspection::service_read, this, _1));
-    k.add_service(mod_name, base.str() + "write", service_definition_write,
-            boost::bind(&memory_inspection::service_write, this, _1));
-    k.add_service(mod_name, base.str() + "get_info",service_definition_get_info,
-            boost::bind(&memory_inspection::service_get_info, this, _1));
+
+const char* interface_memory_inspection::memory_inspection_sp_magic = "memory_inspection"; 
+
+//! handler construction
+memory_inspection_handler::memory_inspection_handler(
+		std::string mod_name, std::string dev_name, int slave_id) : 
+	log_base(mod_name, (mod_name + "." + dev_name + ".memory_inspection")), 
+	mod_name(mod_name), dev_name(dev_name), slave_id(slave_id) {
+	kernel& k = *kernel::get_instance();
+
+	stringstream base;
+	base << mod_name << "." << dev_name << ".memory_inspection.";
+
+	k.add_service(mod_name, base.str() + "read", service_definition_read,
+			std::bind(&memory_inspection_handler::service_read, this, _1, _2));
+	k.add_service(mod_name, base.str() + "write", service_definition_write,
+			std::bind(&memory_inspection_handler::service_write, this, _1, _2));
+//	k.add_service(mod_name, base.str() + "get_info",service_definition_get_info,
+//			std::bind(&memory_inspection_handler::service_get_info, this, _1, _2));
 }
+
+//! handler destruction
+memory_inspection_handler::~memory_inspection_handler() {
+	kernel& k = *kernel::get_instance();
+
+	stringstream base;
+	base << mod_name << "." << dev_name << ".memory_inspection.";
+	k.remove_service(base.str() + "read");
+	k.remove_service(base.str() + "write");
+//	k.remove_service(base.str() + "get_info");
+};
 
 //! service callback read memory
 /*!
- * \param message service message
+ * \param request service request data
+ * \parma response service response data
  * \return success
  */
-int memory_inspection::service_read(YAML::Node& message) {
-    memory_t memory_req;
-    memory_req.slave_id = slave_id;
-    memory_req.address  = get_as<uint64_t>(message["request"], "data_adr");
-    memory_req.length   = get_as<uint32_t>(message["request"], "data_len");
+int memory_inspection_handler::service_read(const robotkernel::service_arglist_t& request, 
+		robotkernel::service_arglist_t& response) {
+	memory_t memory_req;
+	memory_req.slave_id = slave_id;
+#define READ_REQ_DATA_ADR	0
+#define READ_REQ_DATA_LEN	1
+	memory_req.address  = request[READ_REQ_DATA_ADR];
+	memory_req.length   = request[READ_REQ_DATA_LEN];
 
-    std::vector<uint8_t> data;
-    data.resize(memory_req.length);
-    memory_req.data     = &data[0];
-    
-    // default response values
-    message["response"]["data"] = data;
-    message["response"]["error_message"] = "";
+	// response values
+	string error_message = "";
+	std::vector<rk_type> data_resp;
 
-    int ret = kernel::request_cb(mod_name.c_str(), 
-            MOD_REQUEST_MEMORY_READ, (void *)&memory_req);
+	std::vector<uint8_t> data;
+	data.resize(memory_req.length);
+	memory_req.data     = &data[0];
 
-    if (ret == -1) {
-        message["response"]["error_message"] =
-            "MOD_REQUEST_MEMORY_READ failed!";
-        return 0;
-    }
+	int ret = kernel::request_cb(mod_name.c_str(), 
+			MOD_REQUEST_MEMORY_READ, (void *)&memory_req);
 
-    message["response"]["data"] = data;
+	if (ret == -1) {
+		error_message = "MOD_REQUEST_MEMORY_READ failed!";
+	} else 
+		data_resp.assign(data.begin(), data.end());
 
-    return 0;
+#define READ_RESP_DATA			0
+#define READ_RESP_ERROR_MESSAGE	1
+	response.resize(2);
+	response[READ_RESP_DATA] = data_resp;
+	response[READ_RESP_ERROR_MESSAGE] = error_message;
+
+	return 0;
 }
 
-const std::string memory_inspection::service_definition_read =
-    "request:\n"
-    "   uint64_t: data_adr\n"
-    "   uint32_t: data_len\n"
-    "response:\n"
-    "   uint8_t*: data\n"
-    "   string: error_message\n";
+const std::string memory_inspection_handler::service_definition_read =
+"request:\n"
+"   uint64_t: data_adr\n"
+"   uint32_t: data_len\n"
+"response:\n"
+"   vector/uint8_t: data\n"
+"   string: error_message\n";
 
 //! service callback write memory
 /*!
- * \param message service message
+ * \param request service request data
+ * \parma response service response data
  * \return success
  */
-int memory_inspection::service_write(YAML::Node& message) {
-    memory_t memory_req;
-    memory_req.slave_id = slave_id;
-    memory_req.address  = get_as<uint64_t>(message["request"], "data_adr");
-    memory_req.length   = get_as<uint32_t>(message["request"], "data_len");
+int memory_inspection_handler::service_write(const robotkernel::service_arglist_t& request, 
+		robotkernel::service_arglist_t& response) {
+	memory_t memory_req;
+	memory_req.slave_id = slave_id;
+#define WRITE_REQ_DATA_ADR	0
+#define WRITE_REQ_DATA_LEN	1
+#define WRITE_REQ_DATA		2
+	memory_req.address  			= request[WRITE_REQ_DATA_ADR];
+	memory_req.length   			= request[WRITE_REQ_DATA_LEN];
+	std::vector<rk_type> data_req 	= request[WRITE_REQ_DATA];
 
-    std::vector<uint8_t> data = get_as<std::vector<uint8_t> >(
-            message["request"], "data");
-    memory_req.data     = &data[0];
-    
-    // default response values
-    message["response"]["error_message"] = "";
+	// response
+	string error_message = "";
 
-    int ret = kernel::request_cb(mod_name.c_str(), 
-            MOD_REQUEST_MEMORY_WRITE, (void *)&memory_req);
+	std::vector<uint8_t> data;
+	data.assign(data_req.begin(), data_req.end());
 
-    if (ret == -1) {
-        message["response"]["error_message"] =
-            "MOD_REQUEST_MEMORY_WRITE failed!";
-        return 0;
-    }
+	int ret = kernel::request_cb(mod_name.c_str(), 
+			MOD_REQUEST_MEMORY_WRITE, (void *)&memory_req);
 
-    return 0;
+	if (ret == -1)
+		error_message = "MOD_REQUEST_MEMORY_WRITE failed!";
+
+#define WRITE_RESP_ERROR_MESSAGE	0
+	response.resize(1);
+	response[WRITE_RESP_ERROR_MESSAGE] = error_message;
+
+	return 0;
 }
 
-const std::string memory_inspection::service_definition_write =
-    "request:\n"
-    "   uint64_t: data_adr\n"
-    "   uint32_t: data_len\n"
-    "   uint8_t*: data\n"
-    "response:\n"
-    "   string: error_message\n";
+const std::string memory_inspection_handler::service_definition_write =
+"request:\n"
+"   uint64_t: data_adr\n"
+"   uint32_t: data_len\n"
+"   vector/uint8_t: data\n"
+"response:\n"
+"   string: error_message\n";
 
-	    
-//int memory_inspection::on_get_info(ln::service_request& req, ln_service_robotkernel_memory_inspection_get_info& svc) {
-//    memory_t memory_req;
-//    memory_req.slave_id = slave_id;
-//    memory_req.address  = 0;
-//    memory_req.length   = 0;
-//    memory_req.data     = NULL;
-//    
-//    svc.resp.base_adr = 0;
-//    svc.resp.len = 0;
-//    try {
-//	    int ret = kernel::request_cb(mod_name.c_str(), MOD_REQUEST_MEMORY_GET_INFO, (void *)&memory_req);
-//	    
-//	    if (ret == -1) 
-//		    throw str_exception("MOD_REQUEST_GET_INFO failed!");
-//
-//	    svc.resp.base_adr = memory_req.address;
-//	    svc.resp.len = memory_req.length;
-//	    
-//	    svc.resp.error_message_len = 0;
-//	    
-//	    req.respond();
-//    }
-//    catch(const exception& e) {
-//	    ln::string_buffer err(&svc.resp.error_message, e.what());
-//	    req.respond();
-//    }
-//
-//
-//    return 0;
-//}
-        
 //! service callback get_info memory
 /*!
- * \param message service message
+ * \param request service request data
+ * \parma response service response data
  * \return success
  */
-int memory_inspection::service_get_info(YAML::Node& message) {
-    return 0;
+int memory_inspection_handler::service_get_info(const robotkernel::service_arglist_t& request, 
+		robotkernel::service_arglist_t& response) {
+	return 0;
 }
 
-const std::string memory_inspection::service_definition_get_info = 
-    "response:\n"
-    "   uint64_t: base_adr\n"
-    "   uint32_t: len\n"
-    "   string: error_message\n";
+const std::string memory_inspection_handler::service_definition_get_info = 
+"response:\n"
+"   uint64_t: base_adr\n"
+"   uint32_t: len\n"
+"   string: error_message\n";
 

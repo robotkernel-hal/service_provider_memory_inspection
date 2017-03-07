@@ -15,4 +15,3 @@ build/${ARCH}/install/lib => lib/${ARCH}
 doc/ => doc/
 share/ => share/
 src/main/cpp/*.h => include/@PACKAGE@/
-build/sled11-x86-gcc4.x/src/main/cpp/interface_memory_inspection_ln_messages.h => include/@PACKAGE@/

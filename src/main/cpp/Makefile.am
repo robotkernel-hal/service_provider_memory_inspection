@@ -8,9 +8,9 @@ include_headersdir = $(includedir)/interface_memory_inspection
 include_headers_HEADERS = interface_memory_inspection_ln_messages.h
 
 libinterface_memory_inspection_la_SOURCES  = interface_memory_inspection.cpp
-libinterface_memory_inspection_la_CXXFLAGS = -fno-strict-aliasing -Wall -I$(srcdir) -I$(builddir) \
+libinterface_memory_inspection_la_CXXFLAGS = --std=c++11 -fno-strict-aliasing -Wall -I$(srcdir) -I$(builddir) \
                                              -DBUILD_INTERFACE_MEMORY_INSPECTION \
-                                             @ROBOTKERNEL_CFLAGS@ @LIBSTRING_UTIL_CFLAGS@ @YAML_CPP_CFLAGS@
+                                             @ROBOTKERNEL_CFLAGS@ @LIBSTRING_UTIL_CFLAGS@ @YAML_CPP_RMC_CFLAGS@
 libinterface_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VERSION)
 
 VPATH = $(srcdir):$(top_srcdir)/share/ln/message_definitions
