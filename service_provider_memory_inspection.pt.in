@@ -1,0 +1,17 @@
+PTVERSION           = 2
+NAME                = @PACKAGE@
+VERSION             = @VERSION@
+DESCRIPTION         = robotkernel @PACKAGE@
+MAINTAINER          = @MAINTAINER@
+DOCUMENTATION       = https://rmc-intra03.robotic.dlr.de/wiki/Robotkernel/service_provider_memory_inspection
+ARCHS               = @ARCHS@
+SUPPORTED_LANGUAGES = C
+C_INCLUDE_PATHS     = ${PKGROOT}/include/
+C_LIB_PATHS         = ${PKGROOT}/lib/${ARCH}
+C_LIBS              = 
+
+[install]
+build/${ARCH}/install/lib => lib/${ARCH}
+doc/ => doc/
+share/ => share/
+src/main/cpp/include => include
