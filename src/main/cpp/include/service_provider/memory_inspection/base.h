@@ -59,7 +59,6 @@ namespace service_provider {
                 //! read memory
                 /*!
                  * \param address start address
-                 * \param length length to read
                  * \param data read data
                  */
                 virtual void read_memory(const uint64_t& address, data_t& data) = 0;
@@ -67,7 +66,6 @@ namespace service_provider {
                 //! write memory
                 /*!
                  * \param address start address
-                 * \param length length to read
                  * \param data data to write
                  */
                 virtual void write_memory(const uint64_t& address, data_t& data) = 0;
