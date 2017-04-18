@@ -10,6 +10,6 @@ libservice_provider_memory_inspection_la_CXXFLAGS = --std=c++11 -fno-strict-alia
                                              -DBUILD_service_provider_MEMORY_INSPECTION 			\
                                              @ROBOTKERNEL_CFLAGS@ 							\
 											 @LIBSTRING_UTIL_CFLAGS@ 						\
-											 @YAML_CPP_RMC_CFLAGS@
+											 @YAML_CPP_CFLAGS@
 libservice_provider_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VERSION)
 
