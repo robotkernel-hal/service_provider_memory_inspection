@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: service_provider_memory_inspection
+Description: service provider to access device memory
+URL: rmc-github.robotic.dlr.de:robotkernel/interface_canopen_memory_inspection.git
+Version: @VERSION@
+Cflags: -I@includedir@ 
+
