@@ -162,7 +162,7 @@ int memory_inspection::handler::service_get_memory_areas(const robotkernel::serv
         _instance->get_memory_areas(areas);
 
         for (area_list_t::iterator it = areas.begin(); 
-                it == areas.end(); ++it) {
+                it != areas.end(); ++it) {
             address.push_back(it->address);
             length.push_back(it->length);
         }

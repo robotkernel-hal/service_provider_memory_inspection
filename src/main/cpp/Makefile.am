@@ -1,4 +1,3 @@
-libdir = $(prefix)/lib
 lib_LTLIBRARIES = libservice_provider_memory_inspection.la
 
 extraincludedir = $(includedir)/service_provider/memory_inspection
