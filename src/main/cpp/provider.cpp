@@ -31,8 +31,8 @@ using namespace robotkernel;
 using namespace service_provider;
 using namespace string_util;
 
-memory_inspection::handler::handler(const robotkernel::sp_service_requester_t& req) 
-    : log_base("memory_inspection", req->owner + "." + req->service_prefix + ".memory_inspection") {
+memory_inspection::handler::handler(const robotkernel::sp_service_collector_device_t& req) 
+    : log_base("memory_inspection", req->owner + "." + req->device_name + ".memory_inspection") {
     robotkernel::kernel& k = *robotkernel::kernel::get_instance();
 
     _instance = std::dynamic_pointer_cast<service_provider::memory_inspection::base>(req);
@@ -40,13 +40,13 @@ memory_inspection::handler::handler(const robotkernel::sp_service_requester_t& r
         throw str_exception("wrong base class");
 
     std::stringstream base;
-    base << _instance->owner << "." << _instance->service_prefix << ".memory_inspection.";
+    base << _instance->owner << "." << _instance->device_name << ".memory_inspection.";
 
     k.add_service(_instance->owner, base.str() + "read_memory", service_definition_read_memory,
             std::bind(&handler::service_read_memory, this, _1, _2));
     k.add_service(_instance->owner, base.str() + "write_memory", service_definition_write_memory,
             std::bind(&handler::service_write_memory, this, _1, _2));
-    k.add_service(_instance->owner, base.str() + "get_memory_ares", service_definition_get_memory_areas,
+    k.add_service(_instance->owner, base.str() + "get_memory_areas", service_definition_get_memory_areas,
             std::bind(&handler::service_get_memory_areas, this, _1, _2));
 }
 
@@ -55,7 +55,7 @@ memory_inspection::handler::~handler() {
     kernel& k = *kernel::get_instance();
 
     stringstream base;
-    base << _instance->owner << "." << _instance->service_prefix << ".memory_inspection.";
+    base << _instance->owner << "." << _instance->device_name << ".memory_inspection.";
     k.remove_service(base.str() + "read_memory");
     k.remove_service(base.str() + "write_memory");
     k.remove_service(base.str() + "get_memory_areas");
