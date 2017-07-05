@@ -39,14 +39,14 @@ memory_inspection::handler::handler(const robotkernel::sp_service_interface_t& r
     if (!_instance)
         throw str_exception("wrong base class");
 
-    std::stringstream base;
-    base << _instance->device_name << ".memory_inspection.";
-
-    k.add_service(_instance->owner, base.str() + "read_memory", service_definition_read_memory,
+    k.add_service(_instance->owner, _instance->device_name + ".read_memory", 
+            service_definition_read_memory,
             std::bind(&handler::service_read_memory, this, _1, _2));
-    k.add_service(_instance->owner, base.str() + "write_memory", service_definition_write_memory,
+    k.add_service(_instance->owner, _instance->device_name + ".write_memory", 
+            service_definition_write_memory,
             std::bind(&handler::service_write_memory, this, _1, _2));
-    k.add_service(_instance->owner, base.str() + "get_memory_areas", service_definition_get_memory_areas,
+    k.add_service(_instance->owner, _instance->device_name + ".get_memory_areas", 
+            service_definition_get_memory_areas,
             std::bind(&handler::service_get_memory_areas, this, _1, _2));
 }
 
@@ -55,10 +55,9 @@ memory_inspection::handler::~handler() {
     kernel& k = *kernel::get_instance();
 
     stringstream base;
-    base << _instance->device_name << ".memory_inspection.";
-    k.remove_service(_instance->owner, base.str() + "read_memory");
-    k.remove_service(_instance->owner, base.str() + "write_memory");
-    k.remove_service(_instance->owner, base.str() + "get_memory_areas");
+    k.remove_service(_instance->owner, _instance->device_name + ".read_memory");
+    k.remove_service(_instance->owner, _instance->device_name + ".write_memory");
+    k.remove_service(_instance->owner, _instance->device_name + ".get_memory_areas");
 };
 
 //! service callback read memory
