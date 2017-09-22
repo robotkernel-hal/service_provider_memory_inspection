@@ -1,0 +1,18 @@
+requires_version 0.2.43
+# this include file can be customized with the following defines:
+#   service_provider_memory_inspection_base
+#     (optional) path to service_provider_memory_inspection base directory
+#     e.g. /volume/software/robotkernel/packages/service_provider_memory_inspection/5.0.0
+#     defaults to rmpm structure
+#   service_provider_memory_inspection_library_path
+#     (optional) add custom search paths
+
+defines
+service_provider_memory_inspection_base:          %(dirname %(dirname %(CURDIR)))
+service_provider_memory_inspection_libdir:        %(subst "${exec_prefix}/", "", "@libdir@")
+service_provider_memory_inspection_type:          %(ifexists "%(service_provider_memory_inspection_base)/%(service_provider_memory_inspection_libdir)/libservice_provider_memory_inspection.so", "local_install", "rmpm_release")
+service_provider_memory_inspection_library_path:  %(ifeq "%(service_provider_memory_inspection_type)", "local_install", "%(service_provider_memory_inspection_base)/%(service_provider_memory_inspection_libdir)", "%(service_provider_memory_inspection_base)/lib/$(ARCH)")
+
+ifndef rk_library_path: rk_library_path: ""
+rk_library_path: %(rk_library_path):%(service_provider_memory_inspection_library_path)
+
