@@ -1,7 +1,0 @@
-service
-request
-uint64_t data_adr
-uint32_t data_len
-response
-char* error_message
-uint8_t* data

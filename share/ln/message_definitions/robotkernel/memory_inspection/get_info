@@ -1,6 +1,0 @@
-service
-request
-response
-uint64_t base_adr
-uint32_t len
-char* error_message
