@@ -97,11 +97,11 @@ int memory_inspection::handler::service_read_memory(
 
 const std::string memory_inspection::handler::service_definition_read_memory =
 "request:\n"
-"   uint64_t: data_adr\n"
-"   uint32_t: data_len\n"
+"- uint64_t: data_adr\n"
+"- uint32_t: data_len\n"
 "response:\n"
-"   vector/uint8_t: data\n"
-"   string: error_message\n";
+"- vector/uint8_t: data\n"
+"- string: error_message\n";
 
 //! service callback write memory
 /*!
@@ -138,10 +138,10 @@ int memory_inspection::handler::service_write_memory(
 
 const std::string memory_inspection::handler::service_definition_write_memory =
 "request:\n"
-"   uint64_t: data_adr\n"
-"   vector/uint8_t: data\n"
+"- uint64_t: data_adr\n"
+"- vector/uint8_t: data\n"
 "response:\n"
-"   string: error_message\n";
+"- string: error_message\n";
 
 //! service callback get_info memory
 /*!
@@ -182,7 +182,7 @@ int memory_inspection::handler::service_get_memory_areas(const robotkernel::serv
 
 const std::string memory_inspection::handler::service_definition_get_memory_areas = 
 "response:\n"
-"   vector/uint64_t: address\n"
-"   vector/uint32_t: length\n"
-"   string: error_message\n";
+"- vector/uint64_t: address\n"
+"- vector/uint32_t: length\n"
+"- string: error_message\n";
 
