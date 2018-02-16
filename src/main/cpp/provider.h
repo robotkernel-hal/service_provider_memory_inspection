@@ -34,61 +34,75 @@
 #include "service_provider/memory_inspection/base.h"
 
 namespace service_provider {
-    namespace memory_inspection {
-        // forward declaration
-        class handler;
+#ifdef EMACS
+}
+#endif
 
-        class provider : public robotkernel::service_provider_base<handler, base> {
-            public:
-                //! default construction
-                provider()
-                    : service_provider_base("memory_inspection") {};
-        };
+namespace memory_inspection {
+#ifdef EMACS
+}
+#endif
 
-        class handler : public robotkernel::log_base {
-            public:
-                typedef std::shared_ptr<service_provider::memory_inspection::base> sp_mi_base_t;
-                sp_mi_base_t _instance;
+// forward declaration
+class handler;
 
-                //! handler construction
-                handler(const robotkernel::sp_service_interface_t& req);
+class provider : public robotkernel::service_provider_base<handler, base> {
+    public:
+        //! default construction
+        provider(const std::string& name)
+            : service_provider_base(name, "memory_inspection") {};
+};
 
-                //! handler destruction
-                ~handler();
+class handler : public robotkernel::log_base {
+    public:
+        typedef std::shared_ptr<service_provider::memory_inspection::base> sp_mi_base_t;
+        sp_mi_base_t _instance;
 
-                //! service callback read memory
-                /*!
-                 * \param request service request data
-                 * \parma response service response data
-                 * \return success
-                 */
-                int service_read_memory(const robotkernel::service_arglist_t& request, 
-                        robotkernel::service_arglist_t& response);
-                static const std::string service_definition_read_memory;
+        //! handler construction
+        handler(const robotkernel::sp_service_interface_t& req);
 
-                //! service callback write memory
-                /*!
-                 * \param request service request data
-                 * \parma response service response data
-                 * \return success
-                 */
-                int service_write_memory(const robotkernel::service_arglist_t& request, 
-                        robotkernel::service_arglist_t& response);
-                static const std::string service_definition_write_memory;
+        //! handler destruction
+        ~handler();
 
-                //! service callback get_info memory
-                /*!
-                 * \param request service request data
-                 * \parma response service response data
-                 * \return success
-                 */
-                int service_get_memory_areas(const robotkernel::service_arglist_t& request, 
-                        robotkernel::service_arglist_t& response);
-                static const std::string service_definition_get_memory_areas;
-        };
+        //! service callback read memory
+        /*!
+         * \param request service request data
+         * \parma response service response data
+         * \return success
+         */
+        int service_read_memory(const robotkernel::service_arglist_t& request, 
+                robotkernel::service_arglist_t& response);
+        static const std::string service_definition_read_memory;
 
-    }; // namespace memory_inspection
+        //! service callback write memory
+        /*!
+         * \param request service request data
+         * \parma response service response data
+         * \return success
+         */
+        int service_write_memory(const robotkernel::service_arglist_t& request, 
+                robotkernel::service_arglist_t& response);
+        static const std::string service_definition_write_memory;
 
+        //! service callback get_info memory
+        /*!
+         * \param request service request data
+         * \parma response service response data
+         * \return success
+         */
+        int service_get_memory_areas(const robotkernel::service_arglist_t& request, 
+                robotkernel::service_arglist_t& response);
+        static const std::string service_definition_get_memory_areas;
+};
+
+#ifdef EMACS
+{
+#endif
+}; // namespace memory_inspection
+
+#ifdef EMACS
+{
+#endif
 }; // namespace service_provider
 
 #endif // __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
