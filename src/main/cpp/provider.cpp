@@ -113,8 +113,7 @@ int memory_inspection::handler::service_write_memory(
         const robotkernel::service_arglist_t& request, 
         robotkernel::service_arglist_t& response) {
 #define WRITE_REQ_DATA_ADR	0
-#define WRITE_REQ_DATA_LEN	1
-#define WRITE_REQ_DATA      2
+#define WRITE_REQ_DATA      1
     uint64_t address                = request[WRITE_REQ_DATA_ADR];
     std::vector<rk_type> data_req   = request[WRITE_REQ_DATA];
     data_t data;
