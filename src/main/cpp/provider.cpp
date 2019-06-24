@@ -96,6 +96,7 @@ int memory_inspection::handler::service_read_memory(
 }
 
 const std::string memory_inspection::handler::service_definition_read_memory =
+"name: service_provider/memory_inspection/read_memory\n"
 "request:\n"
 "- uint64_t: data_adr\n"
 "- uint32_t: data_len\n"
@@ -136,6 +137,7 @@ int memory_inspection::handler::service_write_memory(
 }
 
 const std::string memory_inspection::handler::service_definition_write_memory =
+"name: service_provider/memory_inspection/write_memory\n"
 "request:\n"
 "- uint64_t: data_adr\n"
 "- vector/uint8_t: data\n"
@@ -180,6 +182,7 @@ int memory_inspection::handler::service_get_memory_areas(const robotkernel::serv
 }
 
 const std::string memory_inspection::handler::service_definition_get_memory_areas = 
+"name: service_provider/memory_inspection/get_memory_areas\n"
 "response:\n"
 "- vector/uint64_t: address\n"
 "- vector/uint32_t: length\n"
