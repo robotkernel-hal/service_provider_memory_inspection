@@ -3,6 +3,8 @@
  * author: Robert Burger
  */
 
+// vim: tabstop=4 softtabstop=4 shiftwidth=4 expandtab:
+
 /*
  * This file is part of robotkernel.
  *
@@ -21,6 +23,8 @@
  */
 
 #include "provider.h"
+#include "service_definitions.h"
+
 #include "robotkernel/exceptions.h"
 
 SERVICE_PROVIDER_DEF(memory_inspection, service_provider::memory_inspection::provider);
@@ -30,6 +34,10 @@ using namespace std::placeholders;
 using namespace robotkernel;
 using namespace service_provider;
 using namespace string_util;
+
+const std::string memory_inspection::handler::service_definition_read_memory = robotkernel_service_provider_memory_inspection_read_memory_service_definition;
+const std::string memory_inspection::handler::service_definition_write_memory = robotkernel_service_provider_memory_inspection_write_memory_service_definition;
+const std::string memory_inspection::handler::service_definition_get_memory_areas =  robotkernel_service_provider_memory_inspection_get_memory_areas_service_definition;
 
 memory_inspection::handler::handler(const robotkernel::sp_service_interface_t& req) 
     : log_base(req->owner, "memory_inspection", req->device_name) {
@@ -95,15 +103,6 @@ int memory_inspection::handler::service_read_memory(
     return 0;
 }
 
-const std::string memory_inspection::handler::service_definition_read_memory =
-"name: service_provider/memory_inspection/read_memory\n"
-"request:\n"
-"- uint64_t: data_adr\n"
-"- uint32_t: data_len\n"
-"response:\n"
-"- vector/uint8_t: data\n"
-"- string: error_message\n";
-
 //! service callback write memory
 /*!
  * \param request service request data
@@ -135,14 +134,6 @@ int memory_inspection::handler::service_write_memory(
 
     return 0;
 }
-
-const std::string memory_inspection::handler::service_definition_write_memory =
-"name: service_provider/memory_inspection/write_memory\n"
-"request:\n"
-"- uint64_t: data_adr\n"
-"- vector/uint8_t: data\n"
-"response:\n"
-"- string: error_message\n";
 
 //! service callback get_info memory
 /*!
@@ -180,11 +171,4 @@ int memory_inspection::handler::service_get_memory_areas(const robotkernel::serv
 
     return 0;
 }
-
-const std::string memory_inspection::handler::service_definition_get_memory_areas = 
-"name: service_provider/memory_inspection/get_memory_areas\n"
-"response:\n"
-"- vector/uint64_t: address\n"
-"- vector/uint32_t: length\n"
-"- string: error_message\n";
 
