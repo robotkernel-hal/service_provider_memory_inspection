@@ -36,7 +36,7 @@ class memory_inspection_view(helpers.service_provider_view, helpers.builder_base
         helpers.builder_base.__init__(self, fn, 'memory_inspection_box')
         helpers.service_provider_view.__init__(self, parent.app, parent, self.memory_inspection_box, 'get_memory_areas')
 
-        container.pack_start(self.memory_inspection_box, True, True)
+        container.pack_start(self.memory_inspection_box, True, True, 0)
 
         #self.kv_refresh_btn.connect("clicked", self.on_refresh)
 
