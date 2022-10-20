@@ -153,7 +153,6 @@
             <property name="can_focus">True</property>
             <property name="invisible_char">●</property>
             <property name="width_chars">4</property>
-            <property name="adjustment">pdi_adjustment</property>
             <property name="digits">1</property>
             <property name="numeric">True</property>
           </object>

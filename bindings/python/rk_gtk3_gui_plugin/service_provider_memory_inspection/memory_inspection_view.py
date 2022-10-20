@@ -33,8 +33,12 @@ from memory_inspection_device import *
 class memory_inspection_view(helpers.service_provider_view, helpers.builder_base):
     def __init__(self, parent, container):
         fn = os.path.join(os.path.dirname(__file__), 'memory_inspection_view.ui')
-        helpers.builder_base.__init__(self, fn, 'memory_inspection_box')
+        helpers.builder_base.__init__(self, fn, 'memory_inspection_box', 'pdi_adjustment')
         helpers.service_provider_view.__init__(self, parent.app, parent, self.memory_inspection_box, 'get_memory_areas')
+
+
+        refresh_spin = self.refresh_spin
+        refresh_spin.adjustment = self.pdi_adjustment
 
         container.pack_start(self.memory_inspection_box, True, True, 0)
 
