@@ -16,8 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Robotkernel-GUI.  If not, see <http://www.gnu.org/licenses/>.
 '''
+from __future__ import absolute_import
 
-from memory_inspection_view import *
+from .memory_inspection_view import *
 
 def init_plugin(parent):
     parent.add_service_provider_gui('service_provider_memory_inspection', memory_inspection_view)

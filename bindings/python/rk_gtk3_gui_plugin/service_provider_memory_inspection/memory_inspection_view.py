@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Robotkernel-GUI.  If not, see <http://www.gnu.org/licenses/>.
 '''
+from __future__ import absolute_import
 
 import os
 import gi
@@ -28,7 +29,7 @@ import math
 
 import helpers
 
-from memory_inspection_device import *
+from .memory_inspection_device import *
 
 class memory_inspection_view(helpers.service_provider_view, helpers.builder_base):
     def __init__(self, parent, container):

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Robotkernel-GUI.  If not, see <http://www.gnu.org/licenses/>.
 '''
+from __future__ import print_function
 
 import time, traceback
 import helpers
@@ -43,7 +44,7 @@ class memory_inspection_device(helpers.svc_wrapper):
                 if (start_adr + bs) < end_adr:
                     self.read_block(start_adr + bs, end_adr, bs, view)
             except:
-                print traceback.format_exc()
+                print(traceback.format_exc())
             return False
 
         #non-blocking read on data, with callback (see get_data)
