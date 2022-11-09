@@ -64,7 +64,7 @@ class memory_inspection_view(helpers.service_provider_view, helpers.builder_base
 
         if device_key not in self.devices:
             self.devices[device_key] = memory_inspection_device(self.app.clnt,
-                    "%s.%s.%s.memory_inspection" % (self.parent.name, module, device))
+                    "{}.{}.{}.memory_inspection".format(self.parent.name, module, device))
 
         if self.current_device != device_key:
             if self.current_device:
