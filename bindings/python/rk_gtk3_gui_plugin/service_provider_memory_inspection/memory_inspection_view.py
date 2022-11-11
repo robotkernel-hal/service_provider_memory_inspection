@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with Robotkernel-GUI.  If not, see <http://www.gnu.org/licenses/>.
 '''
 from __future__ import absolute_import
+from __future__ import division
 
 import os
 import gi
@@ -94,7 +95,7 @@ class memory_inspection_view(helpers.service_provider_view, helpers.builder_base
             ml = max(ml, 4)
             o = 0
             while o < len(data):
-                line = "0x%0*x  %s " % (ml, o, " ".join(map(lambda f: "%02x" % f, data[o:o+line_len])))
+                line = "0x%0*x  %s " % (ml, o, " ".join(["%02x" % f for f in data[o:o+line_len]]))
                 for c in data[o:o+line_len]:
                     if c > 32 and c < 126:
                         line += "%c" %c
