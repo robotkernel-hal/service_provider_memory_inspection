@@ -42,6 +42,8 @@ class memory_inspection_view(helpers.service_provider_view, helpers.builder_base
         refresh_spin = self.refresh_spin
         refresh_spin.adjustment = self.pdi_adjustment
 
+        # remove all previous content of the container
+        container.foreach(self.remove)
         container.pack_start(self.memory_inspection_box, True, True, 0)
 
         #self.kv_refresh_btn.connect("clicked", self.on_refresh)
