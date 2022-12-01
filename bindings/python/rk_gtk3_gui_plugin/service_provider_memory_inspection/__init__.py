@@ -21,5 +21,5 @@ from __future__ import absolute_import
 from .memory_inspection_view import *
 
 def init_plugin(parent):
-    parent.add_service_provider_gui('service_provider_memory_inspection', memory_inspection_view)
+    parent.add_service_provider_gui('memory_inspection', memory_inspection_view)
 
