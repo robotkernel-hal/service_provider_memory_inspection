@@ -27,6 +27,8 @@ from gi.repository import Gtk
 from gi.repository import GObject
 import traceback
 import math
+import logging
+logger = logging.getLogger()
 
 import helpers
 
@@ -43,7 +45,12 @@ class memory_inspection_view(helpers.service_provider_view, helpers.builder_base
         refresh_spin.adjustment = self.pdi_adjustment
 
         # remove all previous content of the container
-        container.foreach(self.remove)
+        def print_wids(widget, user_data=None):
+            logger.info("miv: container {} contains {}".format(str(container),
+                                                               str(widget)))
+            
+        #container.foreach(container.remove, None)
+        container.foreach(print_wids, None)
         container.pack_start(self.memory_inspection_box, True, True, 0)
 
         #self.kv_refresh_btn.connect("clicked", self.on_refresh)
