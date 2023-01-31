@@ -1,4 +1,4 @@
-name: service_provider_memory_inspection/write_memory
+name: service_provider_memory_inspection/read_memory
 request:
 - uint64_t: data_adr
 - uint32_t: data_len
