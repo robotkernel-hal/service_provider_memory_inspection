@@ -2,7 +2,7 @@ import os
 from conans import ConanFile, AutoToolsBuildEnvironment
 
 class lnrk_interface_python(ConanFile):
-    name = "service_provider_memory_inspection_python_rkgui"
+    name = "service_provider_memory_inspection_rkgui"
     description = "python rkgui binding to service_provider_memory_inspection."
     author = "Robert Burger <robert.burgert@dlr.de>"
     license = "GPLv3"
