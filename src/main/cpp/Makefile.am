@@ -17,9 +17,9 @@ libservice_provider_memory_inspection_la_LDFLAGS  = -Wall -release $(PACKAGE_VER
 
 VPATH = $(srcdir):$(top_srcdir)/share/service_definitions
 
-SERVICE_DEFINITIONS = robotkernel/service_provider_memory_inspection/read_memory \
-					  robotkernel/service_provider_memory_inspection/write_memory \
-					  robotkernel/service_provider_memory_inspection/get_memory_areas
+SERVICE_DEFINITIONS = service_provider/memory_inspection/read_memory \
+					  service_provider/memory_inspection/write_memory \
+					  service_provider/memory_inspection/get_memory_areas
 
 $(top_builddir)/src/main/cpp/service_definitions.h: Makefile $(SERVICE_DEFINITIONS)
 	install -d $(top_builddir)/src/main/cpp/include/robotkernel

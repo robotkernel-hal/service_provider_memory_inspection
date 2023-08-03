@@ -68,7 +68,7 @@ namespace service_provider {
                  * \param address start address
                  * \param data data to write
                  */
-                virtual void write_memory(const uint64_t& address, data_t& data) = 0;
+                virtual void write_memory(const uint64_t& address, const data_t& data) = 0;
         };
 
         inline base::~base() { }

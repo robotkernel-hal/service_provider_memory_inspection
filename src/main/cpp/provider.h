@@ -25,23 +25,19 @@
 #ifndef __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
 #define __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
 
+// Robotkernel includes
 #include "robotkernel/service_provider_base.h"
 #include "robotkernel/service_provider_intf.h"
 #include "robotkernel/service.h"
 #include "robotkernel/kernel.h"
 #include "robotkernel/log_base.h"
 
+// Service provider includes
 #include "service_provider/memory_inspection/base.h"
+#include "service_definitions.h"
 
 namespace service_provider {
-#ifdef EMACS
-}
-#endif
-
 namespace memory_inspection {
-#ifdef EMACS
-}
-#endif
 
 // forward declaration
 class handler;
@@ -53,7 +49,12 @@ class provider : public robotkernel::service_provider_base<handler, base> {
             : service_provider_base(name, "memory_inspection") {};
 };
 
-class handler : public robotkernel::log_base {
+class handler : 
+    public robotkernel::log_base,
+    public svc_base_read_memory,
+    public svc_base_write_memory,
+    public svc_base_get_memory_areas
+{
     public:
         typedef std::shared_ptr<service_provider::memory_inspection::base> sp_mi_base_t;
         sp_mi_base_t _instance;
@@ -62,47 +63,31 @@ class handler : public robotkernel::log_base {
         handler(const robotkernel::sp_service_interface_t& req);
 
         //! handler destruction
-        ~handler();
+        ~handler() {}
 
-        //! service callback read memory
+        //! svc_read_memory
         /*!
-         * \param request service request data
-         * \parma response service response data
-         * \return success
+         * \param[in]   req     Service request data.
+         * \param[out]  resp    Service response data.
          */
-        int service_read_memory(const robotkernel::service_arglist_t& request, 
-                robotkernel::service_arglist_t& response);
-        static const std::string service_definition_read_memory;
+        virtual void svc_read_memory(const struct svc_req_read_memory& req, struct svc_resp_read_memory& resp);
 
-        //! service callback write memory
+        //! svc_write_memory
         /*!
-         * \param request service request data
-         * \parma response service response data
-         * \return success
+         * \param[in]   req     Service request data.
+         * \param[out]  resp    Service response data.
          */
-        int service_write_memory(const robotkernel::service_arglist_t& request, 
-                robotkernel::service_arglist_t& response);
-        static const std::string service_definition_write_memory;
+        virtual void svc_write_memory(const struct svc_req_write_memory& req, struct svc_resp_write_memory& resp);
 
-        //! service callback get_info memory
+        //! svc_get_memory_areas
         /*!
-         * \param request service request data
-         * \parma response service response data
-         * \return success
+         * \param[in]   req     Service request data.
+         * \param[out]  resp    Service response data.
          */
-        int service_get_memory_areas(const robotkernel::service_arglist_t& request, 
-                robotkernel::service_arglist_t& response);
-        static const std::string service_definition_get_memory_areas;
+        virtual void svc_get_memory_areas(const struct svc_req_get_memory_areas& req, struct svc_resp_get_memory_areas& resp);
 };
 
-#ifdef EMACS
-{
-#endif
 }; // namespace memory_inspection
-
-#ifdef EMACS
-{
-#endif
 }; // namespace service_provider
 
 #endif // __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__

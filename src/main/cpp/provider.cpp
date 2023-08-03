@@ -35,140 +35,62 @@ using namespace robotkernel;
 using namespace service_provider;
 using namespace string_util;
 
-const std::string memory_inspection::handler::service_definition_read_memory = robotkernel_service_provider_memory_inspection_read_memory_service_definition;
-const std::string memory_inspection::handler::service_definition_write_memory = robotkernel_service_provider_memory_inspection_write_memory_service_definition;
-const std::string memory_inspection::handler::service_definition_get_memory_areas =  robotkernel_service_provider_memory_inspection_get_memory_areas_service_definition;
-
 memory_inspection::handler::handler(const robotkernel::sp_service_interface_t& req) 
-    : log_base(req->owner, "memory_inspection", req->device_name) {
-    robotkernel::kernel& k = *robotkernel::kernel::get_instance();
-
+    : log_base(req->owner, "memory_inspection", req->device_name) 
+{
     _instance = std::dynamic_pointer_cast<service_provider::memory_inspection::base>(req);
     if (!_instance)
         throw str_exception("wrong base class");
 
-    k.add_service(_instance->owner, _instance->device_name + ".read_memory", 
-            service_definition_read_memory,
-            std::bind(&handler::service_read_memory, this, _1, _2));
-    k.add_service(_instance->owner, _instance->device_name + ".write_memory", 
-            service_definition_write_memory,
-            std::bind(&handler::service_write_memory, this, _1, _2));
-    k.add_service(_instance->owner, _instance->device_name + ".get_memory_areas", 
-            service_definition_get_memory_areas,
-            std::bind(&handler::service_get_memory_areas, this, _1, _2));
+    add_svc_read_memory(_instance->owner, _instance->device_name + ".read_memory");
+    add_svc_write_memory(_instance->owner, _instance->device_name + ".write_memory");
+    add_svc_get_memory_areas(_instance->owner, _instance->device_name + ".get_memory_areas");
 }
 
-//! handler destruction
-memory_inspection::handler::~handler() {
-    kernel& k = *kernel::get_instance();
-
-    stringstream base;
-    k.remove_service(_instance->owner, _instance->device_name + ".read_memory");
-    k.remove_service(_instance->owner, _instance->device_name + ".write_memory");
-    k.remove_service(_instance->owner, _instance->device_name + ".get_memory_areas");
-};
-
-//! service callback read memory
+//! svc_read_memory
 /*!
- * \param request service request data
- * \parma response service response data
- * \return success
+ * \param[in]   req     Service request data.
+ * \param[out]  resp    Service response data.
  */
-int memory_inspection::handler::service_read_memory(
-        const robotkernel::service_arglist_t& request, 
-        robotkernel::service_arglist_t& response) {
-#define READ_REQ_DATA_ADR	0
-#define READ_REQ_DATA_LEN	1
-    uint64_t address  = request[READ_REQ_DATA_ADR];
-    uint32_t length   = request[READ_REQ_DATA_LEN];
-    data_t data(length);
-
-    // response values
-    string error_message = "";
-    std::vector<rk_type> data_resp;
+void memory_inspection::handler::svc_read_memory(const struct svc_req_read_memory& req, struct svc_resp_read_memory& resp) {
+    resp.data.resize(req.data_len);
 
     try {
-        _instance->read_memory(address, data);
-        data_resp.assign(data.begin(), data.end());
+        _instance->read_memory(req.data_adr, resp.data);
     } catch (std::exception& e) {
-        error_message = e.what();
+        resp.error_message = e.what();
     }
-
-#define READ_RESP_DATA			0
-#define READ_RESP_ERROR_MESSAGE	1
-    response.resize(2);
-    response[READ_RESP_DATA] = data_resp;
-    response[READ_RESP_ERROR_MESSAGE] = error_message;
-
-    return 0;
 }
 
-//! service callback write memory
+//! svc_write_memory
 /*!
- * \param request service request data
- * \parma response service response data
- * \return success
+ * \param[in]   req     Service request data.
+ * \param[out]  resp    Service response data.
  */
-int memory_inspection::handler::service_write_memory(
-        const robotkernel::service_arglist_t& request, 
-        robotkernel::service_arglist_t& response) {
-#define WRITE_REQ_DATA_ADR	0
-#define WRITE_REQ_DATA      1
-    uint64_t address                = request[WRITE_REQ_DATA_ADR];
-    std::vector<rk_type> data_req   = request[WRITE_REQ_DATA];
-    data_t data;
-    data.assign(data_req.begin(), data_req.end());
-
-    // response values
-    string error_message = "";
-
+void memory_inspection::handler::svc_write_memory(const struct svc_req_write_memory& req, struct svc_resp_write_memory& resp) {
     try {
-        _instance->write_memory(address, data);
+        _instance->write_memory(req.data_adr, req.data);
     } catch (std::exception& e) {
-        error_message = e.what();
+        resp.error_message = e.what();
     }
-
-#define WRITE_RESP_ERROR_MESSAGE	0
-    response.resize(1);
-    response[WRITE_RESP_ERROR_MESSAGE] = error_message;
-
-    return 0;
 }
 
-//! service callback get_info memory
+//! svc_get_memory_areas
 /*!
- * \param request service request data
- * \parma response service response data
- * \return success
+ * \param[in]   req     Service request data.
+ * \param[out]  resp    Service response data.
  */
-int memory_inspection::handler::service_get_memory_areas(const robotkernel::service_arglist_t& request, 
-        robotkernel::service_arglist_t& response) {
-    // response values
-    string error_message = "";
-    std::vector<rk_type> address;
-    std::vector<rk_type> length;
-
+void memory_inspection::handler::svc_get_memory_areas(const struct svc_req_get_memory_areas& req, struct svc_resp_get_memory_areas& resp) {
     try {
         area_list_t areas;
         _instance->get_memory_areas(areas);
 
-        for (area_list_t::iterator it = areas.begin(); 
-                it != areas.end(); ++it) {
-            address.push_back(it->address);
-            length.push_back(it->length);
+        for (area_list_t::iterator it = areas.begin(); it != areas.end(); ++it) {
+            resp.address.push_back(it->address);
+            resp.length.push_back(it->length);
         }
     } catch (std::exception& e) {
-        error_message = e.what();
+        resp.error_message = e.what();
     }
-
-#define MEMORY_AREA_RESP_ADDRESS        0
-#define MEMORY_AREA_RESP_LENGTH         1
-#define MEMORY_AREA_RESP_ERROR_MESSAGE	2
-    response.resize(3);
-    response[MEMORY_AREA_RESP_ADDRESS]       = address;
-    response[MEMORY_AREA_RESP_LENGTH]        = length;
-    response[MEMORY_AREA_RESP_ERROR_MESSAGE] = error_message;
-
-    return 0;
 }
 
