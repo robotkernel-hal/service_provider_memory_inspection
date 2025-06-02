@@ -12,7 +12,7 @@ class MainProject(ConanFile):
     description = "service_provider_memory_inspection ln message definitions"
     settings = None
     exports_sources = [
-        "share/*",
+        "service_provider/*",
     ]
 
     tool_requires = ["robotkernel_ln_helper/[*]@robotkernel/stable"]
