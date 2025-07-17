@@ -11,9 +11,7 @@ class MainProject(ConanFile):
     license = "GPLv3"
     description = "service_provider_memory_inspection ln message definitions"
     settings = None
-    exports_sources = [
-        "service_provider/*",
-    ]
+    exports_sources = [ "*", ]
 
     tool_requires = ["robotkernel_ln_helper/[*]@robotkernel/stable"]
     generators = "VirtualBuildEnv"
