@@ -1,6 +1,7 @@
 service-provider-memory-inspection (6.0.0~pre1) unstable; urgency=low
 
   * prep: 6.0.0
+  * update: debian docs
 
  -- Mühlbauer, Maximilian Sebastian <Maximilian.Muehlbauer@dlr.de>  Tue, 30 Jan 2024 15:12:08 +0100
 
