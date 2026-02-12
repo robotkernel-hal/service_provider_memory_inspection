@@ -1,6 +1,9 @@
-name: service_provider_memory_inspection/get_memory_areas
-response:
-- vector/uint64_t: address
-- vector/uint32_t: length
-- string: error_message
+datatypes:
+  - name: service_provider_memory_inspection/memory_area
+    fields: [ { name: address, type: uint64_t }, { name: length, type: uint32_t } ]
+services:
+  - name: service_provider_memory_inspection/get_memory_areas
+    response:
+      - { name: areas, type: service_provider_memory_inspection/memory_area, array: true }
+      - { name: error_message, type: string, default: "no error" }
 

@@ -52,10 +52,10 @@ handler::handler(const robotkernel::sp_service_interface_t& req)
  * \param[out]  resp    Service response data.
  */
 void handler::svc_read_memory(const struct svc_req_read_memory& req, struct svc_resp_read_memory& resp) {
-    resp.data.resize(req.data_len);
+    resp.data.resize(req.length);
 
     try {
-        _instance->read_memory(req.data_adr, resp.data);
+        _instance->read_memory(req.address, resp.data);
     } catch (std::exception& e) {
         resp.error_message = e.what();
     }
@@ -68,7 +68,7 @@ void handler::svc_read_memory(const struct svc_req_read_memory& req, struct svc_
  */
 void handler::svc_write_memory(const struct svc_req_write_memory& req, struct svc_resp_write_memory& resp) {
     try {
-        _instance->write_memory(req.data_adr, req.data);
+        _instance->write_memory(req.address, req.data);
     } catch (std::exception& e) {
         resp.error_message = e.what();
     }
@@ -85,8 +85,7 @@ void handler::svc_get_memory_areas(const struct svc_req_get_memory_areas& req, s
         _instance->get_memory_areas(areas);
 
         for (area_list_t::iterator it = areas.begin(); it != areas.end(); ++it) {
-            resp.address.push_back(it->address);
-            resp.length.push_back(it->length);
+            resp.areas.push_back({it->address, it->length});
         }
     } catch (std::exception& e) {
         resp.error_message = e.what();
