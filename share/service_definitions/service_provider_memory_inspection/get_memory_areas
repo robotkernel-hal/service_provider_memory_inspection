@@ -1,9 +1,11 @@
 datatypes:
-  - name: service_provider_memory_inspection/memory_area
-    fields: [ { name: address, type: uint64_t }, { name: length, type: uint32_t } ]
+  service_provider_memory_inspection/memory_area:
+    fields: 
+      address: { type: uint64_t }
+      length: { type: uint32_t } 
 services:
-  - name: service_provider_memory_inspection/get_memory_areas
+  service_provider_memory_inspection/get_memory_areas:
     response:
-      - { name: areas, type: service_provider_memory_inspection/memory_area, array: true }
-      - { name: error_message, type: string, default: "no error" }
+      areas: { type: service_provider_memory_inspection/memory_area, array: true }
+      error_message: { type: string, default: "no error" }
 
