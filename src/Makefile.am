@@ -22,6 +22,6 @@ SERVICE_DEFINITIONS = service_provider_memory_inspection/read_memory \
 
 $(top_builddir)/src/service_definitions.h: Makefile $(SERVICE_DEFINITIONS)
 	@echo creating $@
-	service_generate --indir $(top_srcdir)/share/service_definitions --out $@ $(SERVICE_DEFINITIONS)
+	rk_generate --indir $(top_srcdir)/share/service_definitions --out $@ $(SERVICE_DEFINITIONS)
 	touch $@
 
