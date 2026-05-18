@@ -10,7 +10,7 @@ class service_provider_memory_inspection_rkgui(ConanFile):
     description = "python rkgui binding to service_provider_memory_inspection."
     author = "Robert Burger <robert.burgert@dlr.de>"
     license = "GPLv3"
-    
+
     url = "https://rmc-github.robotic.dlr.de/robotkernel/service_provider_memory_inspection"
     settings = "os"
     pure_python_folder = "."
