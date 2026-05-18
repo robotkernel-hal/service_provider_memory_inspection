@@ -1,6 +1,0 @@
-name: service_provider/memory_inspection/write_memory
-request:
-- uint64_t: data_adr
-- vector/uint8_t: data
-response:
-- string: error_message

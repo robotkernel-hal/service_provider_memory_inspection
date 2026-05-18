@@ -1,0 +1,8 @@
+services:
+  service_provider_memory_inspection/read_memory:
+    request:
+      address: { type: uint64_t }
+      length: { type: uint32_t }
+    response:
+      data: { type: uint8_t, array: true }
+      error_message: { type: string, default: "no error" }

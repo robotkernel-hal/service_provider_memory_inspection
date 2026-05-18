@@ -1,7 +1,0 @@
-name: service_provider/memory_inspection/read_memory
-request:
-- uint64_t: data_adr
-- uint32_t: data_len
-response:
-- vector/uint8_t: data
-- string: error_message

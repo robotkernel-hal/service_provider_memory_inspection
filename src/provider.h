@@ -1,43 +1,41 @@
-//! robotkernel module class
+//! service_provider_memory_inspection provider
 /*!
- * author: Robert Burger
+ * author: Robert Burger <robert.burger@dlr.de>
  *
  * $Id$
  */
 
 /*
- * This file is part of robotkernel.
+ * This file is part of service_provider_memory_inspection.
  *
- * robotkernel is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * robotkernel is distributed in the hope that it will be useful,
+ * service_provider_memory_inspection is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ * 
+ * service_provider_memory_inspection is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with robotkernel.  If not, see <http://www.gnu.org/licenses/>.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with service_provider_memory_inspection; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
-#define __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
+#ifndef SERVICE_PROVIDER_MEMORY_INSPECTION__PROVIDER_H
+#define SERVICE_PROVIDER_MEMORY_INSPECTION__PROVIDER_H
 
 // Robotkernel includes
 #include "robotkernel/service_provider_base.h"
-#include "robotkernel/service_provider_intf.h"
 #include "robotkernel/service.h"
-#include "robotkernel/kernel.h"
 #include "robotkernel/log_base.h"
 
 // Service provider includes
-#include "service_provider/memory_inspection/base.h"
+#include "service_provider_memory_inspection/base.h"
 #include "service_definitions.h"
 
-namespace service_provider {
-namespace memory_inspection {
+namespace service_provider_memory_inspection {
 
 // forward declaration
 class handler;
@@ -56,7 +54,7 @@ class handler :
     public svc_base_get_memory_areas
 {
     public:
-        typedef std::shared_ptr<service_provider::memory_inspection::base> sp_mi_base_t;
+        typedef std::shared_ptr<service_provider_memory_inspection::base> sp_mi_base_t;
         sp_mi_base_t _instance;
 
         //! handler construction
@@ -87,8 +85,7 @@ class handler :
         virtual void svc_get_memory_areas(const struct svc_req_get_memory_areas& req, struct svc_resp_get_memory_areas& resp);
 };
 
-}; // namespace memory_inspection
-}; // namespace service_provider
+}; // namespace service_provider_memory_inspection
 
-#endif // __SERVICE_PROVIDER__MEMORY_INSPECTION__PROVIDER_H__
+#endif // SERVICE_PROVIDER_MEMORY_INSPECTION__PROVIDER_H
 

@@ -11,24 +11,21 @@ class MainProject(ConanFile):
     license = "GPLv3"
     description = "service_provider_memory_inspection ln message definitions"
     settings = None
-    exports_sources = [
-        "share/*",
-    ]
+    exports_sources = [ "*", ]
 
-    tool_requires = ["robotkernel_ln_helper/[*]@robotkernel/stable"]
+    tool_requires = ["robotkernel_ln_helper/[~6]@robotkernel/unstable"]
     generators = "VirtualBuildEnv"
 
     def package(self):
-        svc_def_dir = "share/service_definitions"
         ln_msg_dir = "share/ln/message_definitions"
 
         svc_def_files = []
-        with chdir(self, os.path.join(self.build_folder, svc_def_dir)):
-            for dirpath, dirnames, filenames in os.walk("."):
+        with chdir(self, self.build_folder):
+            for dirpath, dirnames, filenames in os.walk("service_provider_memory_inspection"):
                 svc_def_files.extend(os.path.join(dirpath, filename) for filename in filenames)
 
         self.run(
-            "service_generate --indir %s --outdir %s %s" % (svc_def_dir, ln_msg_dir, " ".join(svc_def_files)), env="conanbuild"
+            "service_generate --indir . --outdir %s %s" % (ln_msg_dir, " ".join(svc_def_files)), env="conanbuild"
         )
 
         copy(self, "share/ln/message_definitions/*", self.build_folder, self.package_folder)

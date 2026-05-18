@@ -1,0 +1,27 @@
+Source: service-provider-memory-inspection
+Priority: optional
+Maintainer: Robert Burger <robert.burger@dlr.de>
+Build-Depends: debhelper-compat (= 13), autotools-dev
+Standards-Version: 4.5.1
+Section: libs
+Homepage: https://www.burger-system.de/robotkernel/service_provider_memory_inspection
+Vcs-Browser: https://github.com/robotkernel-hal/service_provider_memory_inspection.git
+Vcs-Git: https://github.com/robotkernel-hal/service_provider_memory_inspection.git
+Rules-Requires-Root: no
+
+Package: service-provider-memory-inspection-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: robotkernel-dev, ${misc:Depends}
+Description: Robotkernel service provider to export internal memory access services.
+  This service provider gains unified access to internal memory of robotkernel
+  modules. It support reading and writing to these memory areas.
+
+Package: service-provider-memory-inspection
+Architecture: any
+Multi-Arch: same
+Depends: robotkernel ${misc:Depends}
+Description: Robotkernel service provider to export internal memory access services.
+  This service provider gains unified access to internal memory of robotkernel
+  modules. It support reading and writing to these memory areas.

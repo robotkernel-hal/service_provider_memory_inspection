@@ -1,0 +1,241 @@
+service-provider-memory-inspection (6.0.0) unstable; urgency=low
+
+  * prep: 6.0.0
+  * update: debian docs
+  * fix: debian dev package depends
+
+ -- Mühlbauer, Maximilian Sebastian <Maximilian.Muehlbauer@dlr.de>  Tue, 30 Jan 2024 15:12:08 +0100
+
+service-provider-memory-inspection (5.1.3) unstable; urgency=low
+
+  * Merge pull request #4 from robotkernel/feat/conan2
+  * fix: conan2 version ranges
+  * feat: conan2 compat
+  * update for conan_template
+
+ -- Mühlbauer, Maximilian Sebastian <Maximilian.Muehlbauer@dlr.de>  Tue, 30 Jan 2024 15:12:08 +0100
+
+service-provider-memory-inspection (5.1.2) unstable; urgency=low
+
+  * using new service_helper classes
+
+ -- Robert Burger <robert.burger@dlr.de>  Thu, 3 Aug 2023 12:40:42 +0200
+
+service-provider-memory-inspection (5.1.1) unstable; urgency=low
+
+  * fix: expand memory inspection scrolled view
+  * fix: service call
+  * fix: python path
+  * fix: rename python_rkgui to only rkgui due to stupid 51 char limitation of conan
+
+ -- Robert Burger <robert.burger@dlr.de>  Fri, 24 Feb 2023 13:10:46 +0100
+
+service-provider-memory-inspection (5.1.0) unstable; urgency=low
+
+  * change: splitted rkgui pluging
+  * Merge branch 'master' into release/5.1.0
+  * update version for message definitions
+  * fix: name of service in service definition
+  * fix: adapt name of mainloop for async service call
+  * add url to conanfile to reduce noise
+  * debug: add logging of contained widgets
+  * fix: change registered service name
+  * experimental fix: remove previous content of container
+  * feat/py3: convert using futurize
+  * chore: upgrade to python3 format strings
+  * use new LN API for async call
+  * feat/python3: mmodernize code
+  * feat/gtk3: fix connecting of Gtk.Builder objects
+  * fix: API changes for Gtk3
+  * chore: avoid dependency clash during testing
+  * convert to GTK3
+
+ -- Robert Burger <robert.burger@dlr.de>  Mon, 20 Feb 2023 13:02:08 +0100
+
+service-provider-memory-inspection (5.0.7) unstable; urgency=low
+
+  * fix: name of service in service definition
+
+ -- Johannes Nix <johannes.nix@dlr.de>  Tue, 31 Jan 2023 14:52:14 +0100
+
+service-provider-memory-inspection (5.0.6) unstable; urgency=low
+
+  * FIX: gui binding prefix
+  * FIX: read memory service definition
+
+ -- Robert Burger <robert.burger@dlr.de>  Mon, 14 Feb 2022 06:37:48 +0100
+
+service-provider-memory-inspection (5.0.5) unstable; urgency=low
+
+  * CHANGE: switching to yaml service definition files
+
+ -- Robert Burger <robert.burger@dlr.de>  Fri, 4 Feb 2022 10:20:07 +0100
+
+service-provider-memory-inspection (5.0.4) unstable; urgency=low
+
+  * added gui plugin
+  * switching to defaults
+  * using conan template
+
+ -- Robert Burger <robert.burger@dlr.de>  Thu, 27 Feb 2020 15:29:06 +0100
+
+service-provider-memory-inspection (5.0.3) unstable; urgency=low
+
+  * changes target platfroms
+  * Merge branch 'release/5.0.3'
+  * added architectures
+  * added architectures
+  * added architectures
+  * added architectures
+  * fixed jenkinsfile
+  * fixed jenkinsfile
+  * added architectures
+  * added architectures
+  * build: updated build/ci files for cissy 1.0->2.0
+  * build: updated build/ci files for cissy 1.0->2.0
+  * build: updated build/ci files for cissy 1.0->2.0
+  * build: updated build/ci files for cissy 1.0->2.0
+  * Merge branch 'release/5.0.3' of rmc-github.robotic.dlr.de:robotkernel/service-provider-memory-inspection into release/5.0.3
+  * new conan recipe
+  * added better md names
+  * updated jenkins file
+  * fixed deps, added build archs
+  * added jenkins stuff
+
+ -- Robert Burger <robert.burger@dlr.de>  Thu, 24 Oct 2019 07:07:23 +0200
+
+service-provider-memory-inspection (5.0.2) unstable; urgency=low
+
+  * prep 5.0.2
+
+ -- Robert Burger <robert.burger@dlr.de>  Fri, 7 Sep 2018 10:24:21 +0200
+
+service-provider-memory-inspection (5.0.1) unstable; urgency=low
+
+  * Prep 5.0.0 release
+  * Prep 5.0.0 release
+  * added doc
+  * auto commit
+  * fixed version
+  * fixed version
+  * latest
+  * Merge branch 'master' into robotkernel-5
+  * fixed generation of lnc include file
+  * fixed: removed dead link to old scripts makefile
+  * fixed: removed dead link to old scripts makefile
+
+ -- Robert Burger <robert.burger@dlr.de>  Mon, 12 Mar 2018 09:31:04 +0100
+
+service-provider-memory-inspection (5.0.0) unstable; urgency=low
+
+  * switched to beta0
+  * fixed doc desc in project properties
+  * remove ln message defs
+  * fixed ln include file
+  * fixed name of configure_loglevel service
+  * fixed service prefix
+  * latest device name fixes
+  * fixes for latest rk changes
+  * fixed get_memory_areas
+  * build fix
+  * added new dependency resolution
+  * added install rule for pc file
+  * added pcfile
+  * autotools build
+  * mod for latest robotkernel-5
+  * fixed comments
+  * removed unnecessary length fields in request calls
+  * changes in internal calls for robotkernel-5
+  * changes for robotkernel-5
+  * no_ln work
+  * no_ln work
+
+ -- Robert Burger <robert.burger@dlr.de>  Fri, 22 Sep 2017 10:34:48 +0200
+
+service-provider-memory-inspection (4.1.0) unstable; urgency=low
+
+  * 'automated_commit'
+  * 'scripts_updated'
+  * 'scripts_updated'
+  * fixed build
+  * 'replaced_with_default'
+  * 'scripts_updated'
+  * 'scripts_updated'
+  * 'scripts_updated'
+  * Merge branch 'master' of rmc-github.robotic.dlr.de:robotkernel/interface_memory_inspection
+  * 'scripts_updated'
+  * fixed gradle build
+  * 'scripts_updated'
+  * 'scripts_updated'
+  * "transforming"
+  * 'scripts_updated'
+  * updated scripts
+
+ -- Robert Burger <robert.burger@dlr.de>  Wed, 30 Nov 2016 10:28:05 +0100
+
+service-provider-memory-inspection (4.0.2) unstable; urgency=low
+
+  * put ln_messages into own namespace
+  * update to newest scripts
+  * added submodule scripts
+
+ -- Florian Schmidt <florian.schmidt@dlr.de>  Tue, 26 Apr 2016 10:17:11 +0200
+
+service-provider-memory-inspection (4.0.1) unstable; urgency=low
+
+  * prep 4.0.1
+
+ -- Robert Burger <robert.burger@dlr.de>  Wed, 21 Oct 2015 07:03:56 +0000
+
+service-provider-memory-inspection (4.0.0) unstable; urgency=low
+
+  * moved makefile
+  * yamlcpp 0.5.2 interface_base prep 4.0.0 added DOCUMENTATION key
+  * added ingores removed m4
+
+ -- Robert Burger <robert.burger@dlr.de>  Tue, 15 Sep 2015 09:12:53 +0000
+
+service-provider-memory-inspection (3.1.2) unstable; urgency=low
+
+  * prep 3.1.2
+
+ -- Florian Schmidt <Florian.Schmidt@dlr.de>  Thu, 27 Aug 2015 13:29:22 +0000
+
+service-provider-memory-inspection (3.1.1) unstable; urgency=low
+
+  * fixed build
+  * fixed architecutres
+  * prep 3.1.1
+  * new build
+
+ -- Robert Burger <robert.burger@dlr.de>  Wed, 27 May 2015 05:56:47 +0000
+
+service-provider-memory-inspection (3.1.0) unstable; urgency=low
+
+  * prep 3.1.0
+
+ -- Robert Burger <robert.burger@dlr.de>  Mon, 2 Feb 2015 06:42:16 +0000
+
+service-provider-memory-inspection (3.0.2) unstable; urgency=low
+
+  * prep 3.0.2
+  * fixed ln include file name
+
+ -- Robert Burger <robert.burger@dlr.de>  Wed, 14 Jan 2015 06:41:46 +0000
+
+service-provider-memory-inspection (3.0.1) unstable; urgency=low
+
+  * ptfile
+
+ -- Robert Burger <robert.burger@dlr.de>  Tue, 13 Jan 2015 12:56:30 +0000
+
+service-provider-memory-inspection (3.0.0) unstable; urgency=low
+
+  * remove wiki doc, does not work with reltool now..:
+  * ptfile
+  * added ptfiel
+  * added module
+  * creating svn directory 'https://rmsvn01.robotic.dlr.de/software/robotkernel/src/interface_memory_inspection/trunk' [rmpm admintool (burger_r, 2015-01-13-08-59-29)]
+
+ -- Robert Burger <robert.burger@dlr.de>  Tue, 13 Jan 2015 12:29:18 +0000
+

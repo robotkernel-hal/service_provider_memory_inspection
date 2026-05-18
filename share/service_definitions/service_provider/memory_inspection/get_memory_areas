@@ -1,6 +1,0 @@
-name: service_provider/memory_inspection/get_memory_areas
-response:
-- vector/uint64_t: address
-- vector/uint32_t: length
-- string: error_message
-

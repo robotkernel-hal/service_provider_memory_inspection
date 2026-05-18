@@ -1,0 +1,7 @@
+services:
+  service_provider_memory_inspection/write_memory:
+    request:
+      address: { type: uint64_t }
+      data: { type: uint8_t, array: true }
+    response:
+      error_message: { type: string, default: "no error" }

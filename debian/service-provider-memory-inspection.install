@@ -1,0 +1,2 @@
+usr/lib/*/*.so
+usr/bindings usr/share/service-provider-memory-inspection/
